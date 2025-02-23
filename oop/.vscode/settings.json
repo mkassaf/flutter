@@ -1,0 +1,4 @@
+{
+    "DockerRun.DisableDockerrc": true,
+    "editor.formatOnSave": true,
+}
