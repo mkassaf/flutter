@@ -19,3 +19,10 @@ class Data {
 
   Data(this.person, this.address);
 }
+
+void main(List<String> args) {
+  BadData person = BadData(1, "John", "w");
+
+  print(person.id);
+  print(person.name);
+}
