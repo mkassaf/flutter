@@ -23,13 +23,6 @@
             </list>
           </value>
         </entry>
-        <entry key="chat_app">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="clock">
           <value>
             <list>
@@ -228,7 +221,6 @@
       <root url="file://$PROJECT_DIR$/../../../flutter/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/flutter/packages/flutter/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/flutter/packages/flutter_test/lib" />
-      <root url="file://$PROJECT_DIR$/../lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
