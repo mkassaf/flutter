@@ -40,9 +40,8 @@ class _LoginPageState extends State<LoginPage> {
         },
         tooltip: 'Increment',
       ),
-      body: Center(
-        child: Text('Hello, Flutter!'),
-      ),
+      //TODO add the text and image for design
+      body: Text('Hello, Flutter!'),
     );
   }
 }
