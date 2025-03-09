@@ -27,16 +27,11 @@ void main(List<String> args) {
   print(handle(Loading()));
 }
 
+//Pattern in dart (switch)
 String handle(Result result) {
-  String res = '';
-  switch (result) {
-    case Success():
-      res = 'Success';
-    case Failure():
-      res = 'Failure';
-    case Loading():
-      res = 'Loading';
-  }
-
-  return res;
+  return switch (result) {
+    Success() => 'Success',
+    Failure() => 'Failure',
+    _ => 'Loading' //default
+  };
 }
