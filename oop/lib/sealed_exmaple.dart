@@ -21,16 +21,13 @@ class Doctor extends Job {
 }
 
 void main(List<String> args) {
-  printJob(Teacher());
+  print(getName(Teacher()));
 }
 
-void printJob(Job job) {
-  switch (job) {
-    case Teacher():
-      print('Teacher');
-    case Engineer():
-      print('Engineer');
-    case Doctor():
-      print('Doctor');
-  }
+String getName(Job job) {
+  return switch (job) {
+    Teacher() => 'Teacher',
+    Engineer() => 'Engineer',
+    _ => 'Unknown'
+  };
 }
