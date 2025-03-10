@@ -1,15 +1,39 @@
-bool isEmail(String email) {
-  return email.contains("@") && email.contains(".");
+import 'package:oop/access.dart';
+
+extension StringExt on String {
+  bool get isEmail {
+    if (isEmpty && length < 5) {
+      return false;
+    }
+
+    return contains("@") && contains(".");
+  }
+
+  bool isEmailValid() {
+    if (isEmpty && length < 5) {
+      return false;
+    }
+
+    return contains("@") && contains(".");
+  }
+
+  String get getDomain {
+    if (isEmpty && length < 5) {
+      return "";
+    }
+
+    return split("@")[1];
+  }
+
+  String get getUserName {
+    if (isEmpty && length < 5) {
+      return "";
+    }
+
+    return split("@")[0];
+  }
 }
 
-extension EmailValidation on String {
-  bool get isEmail => contains("@") && contains(".");
-
-  bool get isShort => length < 5;
-
-  String get emailDomain => split("@")[1];
-
-  String replaceDomain(String newDomain) {
-    return replaceAll(emailDomain, newDomain);
-  }
+extension PersonExt on Person {
+  String get fullName => "$name $age";
 }

@@ -1,15 +1,18 @@
 import 'utils.dart';
+import 'package:oop/access.dart';
 
 void main(List<String> args) {
-  String email = "a@google.com";
-  String invaludEmail = "a@b";
+  var email = "ahmad@google.com";
+  var invaludEmail = "a@b";
 
   print(email.isEmail); // true
-  print(invaludEmail.isEmail); // false
+  print(invaludEmail.isEmailValid()); // false
 
-  print(invaludEmail.isShort);
+  print(email.getDomain); // google.com
+  print(email.getUserName); // ahmad
 
-  print(email.emailDomain);
-
-  print(invaludEmail.replaceDomain("najah.edu"));
+  var person = Person("Ahmad", 25);
+  print(person.name); // Ahmad
+  print(person.age); // 25
+  print(person.fullName); // Ahmad 25
 }
