@@ -7,8 +7,13 @@ class Laptop {
 
 class MacBook extends Laptop {
   // Method
+  @override
   void display() {
     print("MacBook display");
+  }
+
+  void displayMacBook() {
+    print("MacBook displayMacBook");
   }
 }
 
@@ -21,6 +26,12 @@ class MacBookPro extends MacBook {
 
 void main(List<String> args) {
   List<Laptop> laptops = [Laptop(), MacBook(), MacBookPro()];
+
+  Laptop mac = MacBookPro();
+
+  mac as MacBookPro;
+
+  mac.displayMacBook();
 
   handler(laptops);
 }
