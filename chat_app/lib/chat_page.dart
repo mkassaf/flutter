@@ -1,5 +1,6 @@
+import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
-
+import 'widgets/chat_bubble.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -17,80 +18,19 @@ class ChatPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: ListView(
+      body: Column(
         children: [
-          Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+          Expanded(
+            flex: 1,
+            child: ListView(
               children: [
-                Text("Hi this is your message!", style: TextStyle(fontSize: 20, color: Colors.white),),
-                Image.network("https://shorturl.at/PkTiO", height: 150),
+                ChatBubble(message: "Hi!", alignment: Alignment.centerRight),
+                ChatBubble(message: "Hello!", alignment: Alignment.centerLeft),
+                ChatBubble(message: "Hi this is your message!", alignment: Alignment.centerRight),
               ],
-            ),
-            padding: EdgeInsets.all(24),
-            margin: EdgeInsets.all(50),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
             ),
           ),
-          Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Hi this is your message!", style: TextStyle(fontSize: 20, color: Colors.white),),
-                Image.network("https://shorturl.at/PkTiO", height: 150),
-              ],
-            ),
-            padding: EdgeInsets.all(24),
-            margin: EdgeInsets.all(50),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
-            ),
-          ),
-          Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Hi this is your message!", style: TextStyle(fontSize: 20, color: Colors.white),),
-                Image.network("https://shorturl.at/PkTiO", height: 150),
-              ],
-            ),
-            padding: EdgeInsets.all(24),
-            margin: EdgeInsets.all(50),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
-            ),
-          ),
-          Container(
-            height: 50,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20),
-              ),
-            ),
-            child: Row(
-              children: [
-                IconButton(onPressed: (){}, icon: Icon(Icons.add), color: Colors.white,),
-                IconButton(onPressed: (){}, icon: Icon(Icons.send), color: Colors.white,),
-              ],
-            ),
-          )
+          ChatInput(),
         ],
       ),
     );
