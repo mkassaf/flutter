@@ -28,5 +28,5 @@ void main(List<String> args) {
 
   //continue
 
-  db.insert(); //error
+  //db.insert(); //error
 }
