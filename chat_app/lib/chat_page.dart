@@ -21,7 +21,7 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
+            //TODO: Create a dynamic list sized list of ChatBubble widgets
             child: ListView(
               children: [
                 ChatBubble(message: "Hi!", alignment: Alignment.centerRight),
