@@ -1,6 +1,6 @@
 void main() {
   try {
-    init("");
+    init("https://close-port");
   } on ConnectToUnSecureServerException catch (e) {
     print("ConnectToUnSecureServerException: $e");
     throw InvalidPathException("Invalid path");
@@ -8,12 +8,26 @@ void main() {
     //try again after some time
     print("ServerBusyException");
     init("https://busy-server");
+  } on PortCloseException catch (e) {
+    //let the caller know that the port is closed
+    throw ConnectionFailedException(e.message);
   } on Exception catch (e, s) {
     print("Exception: $e , stack trace: $s");
   } on Error catch (e) {
     print("Error: $e");
   } catch (e) {
     print("Unknown exception: $e");
+  }
+}
+
+class ConnectionFailedException implements Exception {
+  final String message;
+
+  ConnectionFailedException(this.message);
+
+  @override
+  String toString() {
+    return message;
   }
 }
 
@@ -35,6 +49,10 @@ void init(String path) {
     throw ServerBusyException("The server is busy");
   }
 
+  if (path.contains("close-port")) {
+    print("Port is closed");
+    throw PortCloseException("Port is closed");
+  }
   //logic
 
   print("Connected to server");
@@ -76,6 +94,17 @@ class InvalidPathException implements Exception {
   final String message;
 
   InvalidPathException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
+}
+
+class PortCloseException implements Exception {
+  final String message;
+
+  PortCloseException(this.message);
 
   @override
   String toString() {
