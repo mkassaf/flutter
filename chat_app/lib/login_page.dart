@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Text(
               "Welcome back!\n You've been missed!",
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.blue,
@@ -35,12 +35,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Image.network("https://shorturl.at/RqyFD", height: 200),
           ],
+
+          //TODO: Add Login Button
+          //TODO: Add URL Text Button
         ),
       ),
     );
   }
 }
-
-
-
-
