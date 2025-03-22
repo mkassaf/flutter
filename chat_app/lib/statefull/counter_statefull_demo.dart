@@ -19,9 +19,12 @@ class _CounterStatefullState extends State<CounterStatefull> {
   _CounterStatefullState({required this.appBar});
 
   void incremntCounter() {
-    setState(() {
-      counter++;
-    });
+    if (mounted) {
+      setState(() {
+        print('Counter: $counter');
+        counter++;
+      });
+    }
   }
 
   @override
@@ -41,25 +44,13 @@ class _CounterStatefullState extends State<CounterStatefull> {
 
   @override
   void dispose() {
-    //TODO: debug print statement to check if dispose is called
     super.dispose();
+    print("We won't see this message, becasue this app has only one page");
   }
 
   @override
   void initState() {
-    //TODO: debug print statement to check if initState is called
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant CounterStatefull oldWidget) {
-    //TODO: debug print statement to check if didUpdateWidget is called
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void didChangeDependencies() {
-    //TODO: debug print statement to check if didChangeDependencies is called
-    super.didChangeDependencies();
+    print("CounterStatefull initState");
   }
 }
