@@ -20,7 +20,7 @@ class ChatApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: CounterStatefull(),
+      home: const CounterStatefull(buttonColor: Colors.red),
     );
   }
 }
