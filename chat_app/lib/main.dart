@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:chat_app/home_page.dart';
+
 void main() {
-  runApp(Text('Hello, World!'));
+  runApp(ChatApp());
 }
 
-//TODO 1- Define a root widget named ChatApp. 
-//2- Extend ChatApp from StatelessWidget. 
-//3- Implement the required build method to avoid runtime errors
+class ChatApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(title: 'Flutter Demo', home: HomePage());
+  }
+}
