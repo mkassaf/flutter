@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ChatApp());
+  runApp(Text('Hello, World!'));
 }
 
-class ChatApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //TODO: Fill in the body of this function to create a simple chat app
-    return Text('Hello, World!');
-  }
-}
+//TODO 1- Define a root widget named ChatApp. 
+//2- Extend ChatApp from StatelessWidget. 
+//3- Implement the required build method to avoid runtime errors
