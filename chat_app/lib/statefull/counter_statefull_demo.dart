@@ -26,6 +26,7 @@ class _CounterStatefullState extends State<CounterStatefull> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: debug print statement to check if build is called
     return Scaffold(
       appBar: AppBar(title: Text('Stateful Counter'), backgroundColor: appBar),
       body: Center(
@@ -49,17 +50,5 @@ class _CounterStatefullState extends State<CounterStatefull> {
   void initState() {
     //TODO: debug print statement to check if initState is called
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant CounterStatefull oldWidget) {
-    //TODO: debug print statement to check if didUpdateWidget is called
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void didChangeDependencies() {
-    //TODO: debug print statement to check if didChangeDependencies is called
-    super.didChangeDependencies();
   }
 }
