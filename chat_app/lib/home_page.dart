@@ -13,7 +13,15 @@ class HomePage extends StatelessWidget {
           print('FAB clicked!');
         },
       ),
-      body: Text('Hello, World! 🌍'),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Text('Hello, World! 🌍', style: TextStyle(fontSize: 30)),
+            TextField(),
+          ],
+        ),
+      ),
     );
   }
 }
