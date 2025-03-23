@@ -47,17 +47,15 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Image.network("https://shorturl.at/RqyFD", height: 200),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: loginUser,
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
+              //TODO: Add Username and Password text fields here
+              ElevatedButton(
+                onPressed: loginUser,
+                child: Text(
+                  'Click Me',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
                   ),
                 ),
               ),
