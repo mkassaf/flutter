@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  //TODO: Validate the username and password
   void loginUser() {
     final username = userNameController.text;
     final password = passwordController.text;
