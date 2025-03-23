@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {},
                 child: FlutterLogo(), // Using a logo instead of text
               ),
-
+              //TODO: Add the supporting text by final design
               TextButton(
                 onPressed: _launchUrl,
                 child: Text(
