@@ -8,6 +8,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isButtonEnabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +35,30 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Image.network("https://shorturl.at/RqyFD", height: 200),
-          ],
 
-          //TODO: Add Login Button
-          //TODO: Add URL Text Button
+            SizedBox(
+              width: double.infinity, // Full width
+              child: ElevatedButton(
+                onPressed:
+                    isButtonEnabled ? () => print('Login Successful') : null,
+                child: Text(
+                  'Click Me',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+
+            OutlinedButton(
+              onPressed: () {},
+              child: FlutterLogo(), // Using a logo instead of text
+            ),
+
+            TextButton(onPressed: () {}, child: Text('Go to Website')),
+          ],
         ),
       ),
     );
