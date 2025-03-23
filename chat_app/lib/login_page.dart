@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,10 +13,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final Uri _url = Uri.parse('https://flutter.dev');
 
-  bool isButtonEnabled = true;
+  bool isButtonEnabled = false;
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  void Function()? loginUser() {
-    return isButtonEnabled ? () => print('Login Successful') : null;
+  void loginUser() {
+    final username = userNameController.text;
+    final password = passwordController.text;
+    print('Username: $username, Password: $password');
   }
 
   @override
@@ -47,13 +53,44 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Image.network("https://shorturl.at/RqyFD", height: 200),
 
-              //TODO: Add Username and Password text fields here
+              TextField(
+                controller: userNameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Add your username",
+                  hintStyle: TextStyle(color: Colors.blueGrey),
+                ),
+              ),
+
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Type your password",
+                  hintStyle: TextStyle(color: Colors.blueGrey),
+                ),
+              ),
+
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.resolveWith((states) {
+                    // Check if the button is pressed or hovered
+                    if (states.contains(WidgetState.pressed)) {
+                      return Colors.blue; // Color when pressed
+                    } else if (states.contains(WidgetState.hovered)) {
+                      return Colors.green; // Color when hovered
+                    } else if (states.contains(WidgetState.disabled)) {
+                      return Colors.grey; // Color when disabled
+                    }
+                    return Colors.green; // Default color
+                  }),
+                ),
                 onPressed: loginUser,
                 child: Text(
-                  'Click Me',
+                  'Login',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 24,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
                   ),
