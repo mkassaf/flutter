@@ -66,12 +66,29 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {},
                 child: FlutterLogo(), // Using a logo instead of text
               ),
-              //TODO: Add the supporting text by final design
-              TextButton(
-                onPressed: _launchUrl,
-                child: Text(
-                  'Go to Website',
-                  style: TextStyle(decoration: TextDecoration.underline),
+
+              Material(
+                child: InkWell(
+                  splashColor: Colors.red, // Adds a red ripple effect on tap
+                  onDoubleTap: () {
+                    print('Double Tap Detected');
+                  },
+                  onLongPress: () {
+                    print('Long Press Detected');
+                  },
+                  onTap: _launchUrl,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Find more about Flutter",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
