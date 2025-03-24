@@ -12,16 +12,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final Uri _url = Uri.parse('https://flutter.dev');
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isButtonEnabled = false;
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  //TODO: Validate the username and password
   void loginUser() {
-    final username = userNameController.text;
-    final password = passwordController.text;
-    print('Username: $username, Password: $password');
+    if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
+      // Validation passed, proceed with login logic
+      print("Login successful");
+    } else {
+      // Validation failed, show error messages
+      print("Login failed");
+    }
   }
 
   @override
@@ -54,24 +58,53 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Image.network("https://shorturl.at/RqyFD", height: 200),
 
-              TextField(
-                controller: userNameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Add your username",
-                  hintStyle: TextStyle(color: Colors.blueGrey),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    // Username field
+                    TextFormField(
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        if (value!.length < 5) {
+                          return 'Username must be at least 5 characters long';
+                        }
+                        return null;
+                      },
+                      controller: userNameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Add your username",
+                        hintStyle: TextStyle(color: Colors.blueGrey),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ), // Adds space between form fields and buttons
+                    // Password field
+                    TextFormField(
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Password cannot be empty';
+                        }
+                        return null;
+                      },
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Type your password",
+                        hintStyle: TextStyle(color: Colors.blueGrey),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "Type your password",
-                  hintStyle: TextStyle(color: Colors.blueGrey),
-                ),
-              ),
+              SizedBox(
+                height: 24,
+              ), // Adds space between form fields and buttons
 
               ElevatedButton(
                 style: ButtonStyle(
