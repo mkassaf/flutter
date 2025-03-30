@@ -9,15 +9,22 @@ class ChatInput extends StatelessWidget {
       height: 80,
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.add), color: Colors.white,),
-          IconButton(onPressed: (){}, icon: Icon(Icons.send), color: Colors.white,),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+            color: Colors.white,
+          ),
+          //TODO: Add multiline text input
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.send),
+            color: Colors.white,
+          ),
         ],
       ),
     );
