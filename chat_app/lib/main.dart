@@ -21,7 +21,7 @@ class ChatApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: ChatPage(),
+      home: LoginPage(),
     );
   }
 }

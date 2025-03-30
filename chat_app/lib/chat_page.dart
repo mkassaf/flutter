@@ -9,11 +9,15 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Hi CAP students!"),),
+        title: Center(child: Text("Hi CAP students!")),
         actions: [
-          IconButton(onPressed: () {
-            print("Search clicked!");
-          }, icon: Icon(Icons.logout)),
+          IconButton(
+            onPressed: () {
+              //TODO: Navigate to login page
+              print("Search clicked!");
+            },
+            icon: Icon(Icons.logout),
+          ),
         ],
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -21,15 +25,18 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child:
-            ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-              return ChatBubble(
-                message: "Hello, ${index.isEven}",
-                alignment: index.isEven? Alignment.centerRight : Alignment.centerLeft,
-              );
-            })
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ChatBubble(
+                  message: "Hello, ${index.isEven}",
+                  alignment:
+                      index.isEven
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                );
+              },
+            ),
           ),
           ChatInput(),
         ],

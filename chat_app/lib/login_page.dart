@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginUser() {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
+      //TODO Navigate to ChatPage on successful login
       // Validation passed, proceed with login logic
       print("Login successful");
     } else {
