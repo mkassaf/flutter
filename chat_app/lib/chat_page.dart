@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'widgets/chat_bubble.dart';
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  final String username;
+  const ChatPage({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //TODO: remove hardcoded text and replace it with the user name
-        title: Center(child: Text("Hi CAP students!")),
+        title: Center(child: Text("Hi $username")),
         actions: [
           IconButton(
             onPressed: () {

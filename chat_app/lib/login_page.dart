@@ -23,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ChatPage()),
+        MaterialPageRoute(
+          builder: (context) => ChatPage(username: userNameController.text),
+        ),
       );
       print("Login successful");
     } else {
