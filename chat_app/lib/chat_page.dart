@@ -10,6 +10,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //TODO: remove hardcoded text and replace it with the user name
         title: Center(child: Text("Hi CAP students!")),
         actions: [
           IconButton(
