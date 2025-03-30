@@ -19,6 +19,10 @@ class ChatApp extends StatelessWidget {
           primary: Colors.green, // Primary color
           secondary: Colors.blue, // Secondary color
         ),
+        appBarTheme: AppBarTheme(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.blue,
+        ),
         useMaterial3: true,
       ),
       home: LoginPage(),

@@ -1,3 +1,4 @@
+import 'package:chat_app/login_page.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'widgets/chat_bubble.dart';
@@ -13,8 +14,7 @@ class ChatPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              //TODO: Navigate to login page
-              print("Search clicked!");
+              Navigator.pop(context);
             },
             icon: Icon(Icons.logout),
           ),
