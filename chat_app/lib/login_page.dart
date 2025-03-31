@@ -1,8 +1,6 @@
-import 'dart:math';
-
-import 'package:chat_app/chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:chat_app/widgets/login_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -69,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       // Username field
-                      TextFormField(
+                      LoginTextField(
                         validator: (value) {
                           if (value != null && value.isEmpty) {
                             return 'Please enter some text';
@@ -80,30 +78,16 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                         controller: userNameController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Add your username",
-                          hintStyle: TextStyle(color: Colors.blueGrey),
-                        ),
+                        hintText: "Add your username",
                       ),
                       SizedBox(
                         height: 24,
                       ), // Adds space between form fields and buttons
                       // Password field
-                      TextFormField(
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return 'Password cannot be empty';
-                          }
-                          return null;
-                        },
+                      LoginTextField(
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Type your password",
-                          hintStyle: TextStyle(color: Colors.blueGrey),
-                        ),
+                        hasAsterisks: true,
+                        hintText: "Type your password",
                       ),
                     ],
                   ),
