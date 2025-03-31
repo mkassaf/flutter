@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Image.network("https://shorturl.at/RqyFD", height: 200),
+                Image.asset("assets/login_logo.png", height: 200),
 
                 Form(
                   key: _formKey,
