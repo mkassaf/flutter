@@ -21,13 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginUser() {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
-      //TODO: Add Named Routes instead of anonymous routes
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatPage(username: userNameController.text),
-        ),
-      );
+      Navigator.pushNamed(context, '/chat', arguments: userNameController.text);
       print("Login successful");
     } else {
       // Validation failed, show error messages
