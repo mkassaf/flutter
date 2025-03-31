@@ -18,7 +18,12 @@ class LoginTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: validator,
+      validator: (value) {
+        if (validator != null) {
+          return validator!(value);
+        }
+        return null;
+      },
       controller: controller,
       obscureText: hasAsterisks,
       decoration: InputDecoration(
