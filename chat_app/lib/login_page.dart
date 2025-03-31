@@ -69,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       // Username field
+                      //TODO move the textStyle to a separate utils file
                       TextFormField(
                         validator: (value) {
                           if (value != null && value.isEmpty) {
@@ -83,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: "Add your username",
+                          //TODO: move the textStyle to a separate utils file
                           hintStyle: TextStyle(color: Colors.blueGrey),
                         ),
                       ),
