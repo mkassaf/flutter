@@ -1,6 +1,8 @@
+import 'package:chat_app/utils/brand_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
+import 'package:chat_app/utils/spaces.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -80,9 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                         controller: userNameController,
                         hintText: "Add your username",
                       ),
-                      SizedBox(
-                        height: 24,
-                      ), // Adds space between form fields and buttons
+                      verticalSpacing(24),
                       // Password field
                       LoginTextField(
                         controller: passwordController,
@@ -92,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 24,
+                verticalSpacing(
+                  24,
                 ), // Adds space between form fields and buttons
 
                 ElevatedButton(
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                       } else if (states.contains(WidgetState.disabled)) {
                         return Colors.grey; // Color when disabled
                       }
-                      return Colors.green; // Default color
+                      return BrandColors.primary; // Default color
                     }),
                   ),
                   onPressed: loginUser,
