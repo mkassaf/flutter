@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:chat_app/chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginUser() {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
-      // Validation passed, proceed with login logic
+      Navigator.pushNamed(context, '/chat', arguments: userNameController.text);
       print("Login successful");
     } else {
       // Validation failed, show error messages

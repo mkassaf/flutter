@@ -1,3 +1,4 @@
+import 'package:chat_app/login_page.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'widgets/chat_bubble.dart';
@@ -7,13 +8,15 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String username =
+        ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Hi CAP students!")),
+        title: Center(child: Text("Hi $username")),
         actions: [
           IconButton(
             onPressed: () {
-              print("Search clicked!");
+              Navigator.pop(context);
             },
             icon: Icon(Icons.logout),
           ),
