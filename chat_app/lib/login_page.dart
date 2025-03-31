@@ -107,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                       } else if (states.contains(WidgetState.disabled)) {
                         return Colors.grey; // Color when disabled
                       }
+                      //TODO to define a default color
                       return Colors.green; // Default color
                     }),
                   ),

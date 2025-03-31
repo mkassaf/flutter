@@ -13,8 +13,9 @@ class ChatApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.light(
-          primary: Colors.green, // Primary color
-          secondary: Colors.blue, // Secondary color
+          //TODO: Add your primary and secondary colors
+          primary: Colors.green,
+          secondary: Colors.blue,
         ),
         appBarTheme: AppBarTheme(
           foregroundColor: Colors.black,
