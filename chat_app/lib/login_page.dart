@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void loginUser() {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
+      //TODO: Replace the route instead of pushing
       Navigator.pushNamed(context, '/chat', arguments: userNameController.text);
       print("Login successful");
     } else {
