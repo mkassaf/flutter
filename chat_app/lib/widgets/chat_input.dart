@@ -7,6 +7,7 @@ class ChatInput extends StatelessWidget {
 
   void onSendButtonPressed() {
     print("Message sent: ${chatMessageController.text}");
+    //TODO: Add this new massage to the chat list (default list)
   }
 
   @override
