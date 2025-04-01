@@ -72,9 +72,15 @@ class _ChatPageState extends State<ChatPage> {
               },
             ),
           ),
-          ChatInput(),
+          ChatInput(onSend: onMessageSent,),
         ],
       ),
     );
+  }
+
+  void onMessageSent(ChatMessageEntity newMessage) {
+    setState(() {
+      _messages.add(newMessage);
+    });
   }
 }

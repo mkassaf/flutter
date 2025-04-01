@@ -1,13 +1,21 @@
+import 'package:chat_app/models/chat_message_entity.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
-  ChatInput({super.key});
+  Function(ChatMessageEntity) onSend;
+  ChatInput({super.key, required this.onSend});
 
   final chatMessageController = TextEditingController();
 
   void onSendButtonPressed() {
     print("Message sent: ${chatMessageController.text}");
-    //TODO: Add this new massage to the chat list (default list)
+    final newChatMessage = ChatMessageEntity(
+      id: "123",
+      text: chatMessageController.text,
+      createdAt: DateTime.now(),
+      author: Author(username: 'Assaf'),
+    );
+    onSend(newChatMessage);
   }
 
   @override
