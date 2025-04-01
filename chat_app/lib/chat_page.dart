@@ -19,14 +19,16 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessageEntity> _messages = [];
 
   _loadInitialMessages() async {
+    //TODO: execute this code asynchronously
     final response = await rootBundle.loadString('assets/mock_messages.json');
 
     final decodedList = jsonDecode(response) as List;
 
     print(decodedList);
-    List<ChatMessageEntity> messages = decodedList.map((e) {
-      return ChatMessageEntity.fromJson(e);
-    }).toList();
+    List<ChatMessageEntity> messages =
+        decodedList.map((e) {
+          return ChatMessageEntity.fromJson(e);
+        }).toList();
     setState(() {
       _messages = messages;
     });
@@ -72,7 +74,7 @@ class _ChatPageState extends State<ChatPage> {
               },
             ),
           ),
-          ChatInput(onSend: onMessageSent,),
+          ChatInput(onSend: onMessageSent),
         ],
       ),
     );
