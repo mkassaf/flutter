@@ -31,6 +31,8 @@ class ChatPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ChatBubble(
                   message: "Hello, ${index.isEven}",
+                  imageUrl: "https://shorturl.at/PkTiO",
+                  authorName: username,
                   alignment:
                       index.isEven
                           ? Alignment.centerRight
