@@ -15,6 +15,7 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: Container(
+        //TODO: Fix the chat bubble width
         padding: EdgeInsets.all(24),
         margin: EdgeInsets.all(50),
         decoration: BoxDecoration(
