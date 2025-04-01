@@ -1,39 +1,42 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   ChatPage({super.key});
 
-  //TODO replace with data from json file.
-  final List<ChatMessageEntity> _messages = [
-    ChatMessageEntity(
-      id: "1",
-      text: "Hello",
-      createdAt: DateTime.now(),
-      author: Author(username: 'Assaf'),
-    ),
-    ChatMessageEntity(
-      id: "2",
-      text: "Could you please send me the image?",
-      createdAt: DateTime.now(),
-      author: Author(username: 'Assaf'),
-    ),
-    ChatMessageEntity(
-      id: "3",
-      text: "Hello Assaf",
-      createdAt: DateTime.now(),
-      author: Author(username: 'Ahmad'),
-    ),
-    ChatMessageEntity(
-      id: "4",
-      text: "this is the image",
-      createdAt: DateTime.now(),
-      imageUrl: "https://shorturl.at/PkTiO",
-      author: Author(username: 'Ahmad'),
-    ),
-  ];
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  //Initial messages
+  List<ChatMessageEntity> _messages = [];
+
+  _loadInitialMessages() async {
+    final response = await rootBundle.loadString('assets/mock_messages.json');
+
+    final decodedList = jsonDecode(response) as List;
+
+    print(decodedList);
+    List<ChatMessageEntity> messages = decodedList.map((e) {
+      return ChatMessageEntity.fromJson(e);
+    }).toList();
+    setState(() {
+      _messages = messages;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInitialMessages();
+  }
 
   @override
   Widget build(BuildContext context) {
