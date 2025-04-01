@@ -19,7 +19,7 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessageEntity> _messages = [];
 
   _loadInitialMessages() async {
-    //TODO: execute this code asynchronously
+    //TODO: Using .then() Instead of await
     final response = await rootBundle.loadString('assets/mock_messages.json');
 
     final decodedList = jsonDecode(response) as List;
