@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   url_launcher: ^6.0.20
 
+  #TODO add google fonts 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
