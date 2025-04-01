@@ -150,6 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                //TODO: Add soicial media buttons here
               ],
             ),
           ),
