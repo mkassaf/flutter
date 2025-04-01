@@ -1,9 +1,42 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
+import 'models/chat_message_entity.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+class ChatPage extends StatefulWidget {
+  ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  //Initial messages
+  List<ChatMessageEntity> _messages = [];
+
+  _loadInitialMessages() async {
+    final response = await rootBundle.loadString('assets/mock_messages.json');
+
+    final decodedList = jsonDecode(response) as List;
+
+    print(decodedList);
+    List<ChatMessageEntity> messages = decodedList.map((e) {
+      return ChatMessageEntity.fromJson(e);
+    }).toList();
+    setState(() {
+      _messages = messages;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInitialMessages();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +60,27 @@ class ChatPage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
-                  message: "Hello, ${index.isEven}",
+                  chatMessageEntity: _messages[index],
                   alignment:
-                      index.isEven
+                      _messages[index].author.username == username
                           ? Alignment.centerRight
                           : Alignment.centerLeft,
                 );
               },
             ),
           ),
-          ChatInput(),
+          ChatInput(onSend: onMessageSent,),
         ],
       ),
     );
+  }
+
+  void onMessageSent(ChatMessageEntity newMessage) {
+    setState(() {
+      _messages.add(newMessage);
+    });
   }
 }

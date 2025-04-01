@@ -1,17 +1,27 @@
+import 'package:chat_app/models/chat_message_entity.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
-  ChatInput({super.key});
+  Function(ChatMessageEntity) onSend;
+  ChatInput({super.key, required this.onSend});
 
   final chatMessageController = TextEditingController();
 
   void onSendButtonPressed() {
     print("Message sent: ${chatMessageController.text}");
+    final newChatMessage = ChatMessageEntity(
+      id: "123",
+      text: chatMessageController.text,
+      createdAt: DateTime.now(),
+      author: Author(username: 'Assaf'),
+    );
+    onSend(newChatMessage);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 65,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
