@@ -6,6 +6,7 @@ import 'models/chat_message_entity.dart';
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});
 
+  //TODO replace with data from json file.
   final List<ChatMessageEntity> _messages = [
     ChatMessageEntity(
       id: "1",
