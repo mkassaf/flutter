@@ -1,5 +1,6 @@
 import 'package:chat_app/utils/brand_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_buttons/social_media_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:chat_app/utils/spaces.dart';
@@ -150,7 +151,22 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                //TODO: Add soicial media buttons here
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialMediaButton.twitterX(
+                      url: "https://twitter.com/flutterdev",
+                    ),
+                    SocialMediaButton.google(
+                      url: "https://google.com",
+                      color: Colors.red,
+                    ),
+                    SocialMediaButton.linkedin(
+                      url: "https://linkedin.com",
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
