@@ -1,0 +1,59 @@
+[
+    {
+        "id": "1",
+        "author": {
+            "username": "Assaf"
+        },
+        "text": "Hi",
+        "createdAt": 1743509546508
+    },
+    {
+        "id": "2",
+        "author": {
+            "username": "Assaf"
+        },
+        "text": "How are you?",
+        "createdAt": 1743509547308
+    },
+    {
+        "id": "3",
+        "author": {
+            "username": "Ahmad"
+        },
+        "text": "I am fine, thanks!",
+        "createdAt": 1743509547508
+    },
+    {
+        "id": "4",
+        "author": {
+            "username": "Assaf"
+        },
+        "text": "Could you please send me the image?",
+        "createdAt": 1743509549508
+    },
+    {
+        "id": "5",
+        "author": {
+            "username": "Ahmad"
+        },
+        "text": "Sure, here it is.",
+        "image": "https://shorturl.at/PkTiO",
+        "createdAt": 1743509649508
+    },
+    {
+        "id": "6",
+        "author": {
+            "username": "Assaf"
+        },
+        "text": "Thanks!",
+        "createdAt": 1743509650508
+    },
+    {
+        "id": "7",
+        "author": {
+            "username": "Ahmad"
+        },
+        "text": "You're welcome!",
+        "createdAt": 1743509655508
+    }
+]
