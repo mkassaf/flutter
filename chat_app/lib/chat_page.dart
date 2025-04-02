@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:chat_app/repo/image_repository.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'models/image_model.dart';
 import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
-import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
   ChatPage({super.key});
@@ -18,6 +18,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   //Initial messages
   List<ChatMessageEntity> _messages = [];
+  ImageRepository _imageRepository = ImageRepository();
 
   _loadInitialMessages() {
     rootBundle.loadString('assets/mock_messages.json').then((response) {
@@ -33,23 +34,6 @@ class _ChatPageState extends State<ChatPage> {
     print("Messages loading request is sent successfully");
   }
 
-  //TODO Move this to a Repository class
-  Future<List<PixelFormImage>> _getNetworkImage() async {
-    final endpointUrl = Uri.parse('https://picsum.photos/v2/list');
-
-    // Make the GET request
-    final response = await http.get(endpointUrl);
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load images');
-    }
-
-    final decodedList = jsonDecode(response.body) as List;
-    List<PixelFormImage> imageList =
-        decodedList.map((item) {
-          return PixelFormImage.fromJson(item);
-        }).toList();
-    return imageList;
-  }
 
   @override
   void initState() {
@@ -78,7 +62,7 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           FutureBuilder<List<PixelFormImage>>(
-            future: _getNetworkImage(), // Your Future (async operation)
+            future: _imageRepository.getNetworkImage(), // Your Future (async operation)
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // Show loading indicator
