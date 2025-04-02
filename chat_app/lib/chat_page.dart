@@ -8,7 +8,6 @@ import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
 import 'package:http/http.dart' as http;
 
-
 class ChatPage extends StatefulWidget {
   ChatPage({super.key});
 
@@ -34,22 +33,22 @@ class _ChatPageState extends State<ChatPage> {
     print("Messages loading request is sent successfully");
   }
 
-
-  _getNetworkImage() async {
+  //TODO Move this to a Repository class
+  Future<List<PixelFormImage>> _getNetworkImage() async {
     final endpointUrl = Uri.parse('https://picsum.photos/v2/list');
 
     // Make the GET request
     final response = await http.get(endpointUrl);
     if (response.statusCode != 200) {
-      print("Error: ${response.statusCode}");
-      return;
+      throw Exception('Failed to load images');
     }
 
     final decodedList = jsonDecode(response.body) as List;
-    List<PixelFormImage> imageList = decodedList.map((item) {
-       return PixelFormImage.fromJson(item);
-    }).toList();
-    print(imageList[0].downloadUrl);
+    List<PixelFormImage> imageList =
+        decodedList.map((item) {
+          return PixelFormImage.fromJson(item);
+        }).toList();
+    return imageList;
   }
 
   @override
@@ -60,7 +59,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    _getNetworkImage();
     final String username =
         ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
@@ -79,7 +77,23 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          //TODO display images from network
+          FutureBuilder<List<PixelFormImage>>(
+            future: _getNetworkImage(), // Your Future (async operation)
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Show loading indicator
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                // Handle errors
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.hasData) {
+                // Show image when data is ready
+                return Image.network(snapshot.data![0].downloadUrl);
+              } else {
+                return Text("No image available");
+              }
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
@@ -106,3 +120,5 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 }
+
+
