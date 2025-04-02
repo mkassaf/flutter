@@ -28,6 +28,7 @@ class NetworkImagePickerBody extends StatelessWidget {
               maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
             ),
             itemBuilder: (context, index) {
+              //TODO to add a GestureDetector to register click for each image
               return Image.network(snapshot.data![index].downloadUrl);
             },
           );
