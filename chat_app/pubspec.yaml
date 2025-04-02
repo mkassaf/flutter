@@ -38,6 +38,7 @@ dependencies:
       url: https://github.com/ianfrye0818/social_media_buttons 
       ref: master
   json_annotation: ^4.9.0
+  http: ^1.3.0
 
 
 dev_dependencies:

@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'models/image_model.dart';
 import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
+import 'package:http/http.dart' as http;
+
 
 class ChatPage extends StatefulWidget {
   ChatPage({super.key});
@@ -32,9 +34,22 @@ class _ChatPageState extends State<ChatPage> {
     print("Messages loading request is sent successfully");
   }
 
-  //TODO: Get Network Images from https://picsum.photos/v2/list
-  _getNetworkImage() {
 
+  _getNetworkImage() async {
+    final endpointUrl = Uri.parse('https://picsum.photos/v2/list');
+
+    // Make the GET request
+    final response = await http.get(endpointUrl);
+    if (response.statusCode != 200) {
+      print("Error: ${response.statusCode}");
+      return;
+    }
+
+    final decodedList = jsonDecode(response.body) as List;
+    List<PixelFormImage> imageList = decodedList.map((item) {
+       return PixelFormImage.fromJson(item);
+    }).toList();
+    print(imageList[0].downloadUrl);
   }
 
   @override
@@ -45,6 +60,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    _getNetworkImage();
     final String username =
         ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
