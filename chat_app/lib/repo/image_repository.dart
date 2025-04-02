@@ -11,6 +11,7 @@ class ImageRepository {
     // Make the GET request
     final response = await http.get(endpointUrl);
     if (response.statusCode != 200) {
+      //TODO: Handle other exceptions such as SocketException, TimeoutException
       throw Exception('Failed to load images');
     }
 
