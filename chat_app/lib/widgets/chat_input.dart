@@ -2,10 +2,17 @@ import 'package:chat_app/models/chat_message_entity.dart';
 import 'package:chat_app/widgets/picker_body.dart';
 import 'package:flutter/material.dart';
 
-class ChatInput extends StatelessWidget {
+class ChatInput extends StatefulWidget {
   Function(ChatMessageEntity) onSend;
 
   ChatInput({super.key, required this.onSend});
+
+  @override
+  State<ChatInput> createState() => _ChatInputState();
+}
+
+class _ChatInputState extends State<ChatInput> {
+  String? _selectedImageUrl;
 
   final chatMessageController = TextEditingController();
 
@@ -15,15 +22,26 @@ class ChatInput extends StatelessWidget {
       id: "123",
       text: chatMessageController.text,
       createdAt: DateTime.now(),
+      imageUrl: _selectedImageUrl,
       author: Author(username: 'Assaf'),
     );
-    onSend(newChatMessage);
+    widget.onSend(newChatMessage);
+    setState(() {
+      _selectedImageUrl = null;
+      chatMessageController.clear();
+    });
+  }
+
+  void onImagePicked(String imageUrl) {
+    print("Image picked $imageUrl");
+    setState(() {
+      _selectedImageUrl = imageUrl;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -36,7 +54,7 @@ class ChatInput extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return NetworkImagePickerBody();
+                  return NetworkImagePickerBody(onImageSelected: onImagePicked,);
                 },
               );
             },
@@ -44,18 +62,25 @@ class ChatInput extends StatelessWidget {
             color: Colors.white,
           ),
           Expanded(
-            child: TextField(
-              controller: chatMessageController,
-              style: TextStyle(color: Colors.white),
-              keyboardType: TextInputType.multiline,
-              minLines: 1,
-              maxLines: 5,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: InputDecoration(
-                hintText: 'Type a message',
-                hintStyle: TextStyle(color: Colors.blueGrey),
-                border: InputBorder.none,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: chatMessageController,
+                  style: TextStyle(color: Colors.white),
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 5,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    hintText: 'Type a message',
+                    hintStyle: TextStyle(color: Colors.blueGrey),
+                    border: InputBorder.none,
+                  ),
+                ),
+                if (_selectedImageUrl != null)
+                  Image.network(_selectedImageUrl!, width: 100,),
+              ],
             ),
           ),
           IconButton(

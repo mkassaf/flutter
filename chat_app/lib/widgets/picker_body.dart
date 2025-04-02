@@ -5,8 +5,9 @@ import '../repo/image_repository.dart';
 
 class NetworkImagePickerBody extends StatelessWidget {
   final ImageRepository _imageRepository = ImageRepository();
+  void Function(String) onImageSelected;
 
-  NetworkImagePickerBody({super.key});
+  NetworkImagePickerBody({super.key, required this.onImageSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +29,13 @@ class NetworkImagePickerBody extends StatelessWidget {
               maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
             ),
             itemBuilder: (context, index) {
-              //TODO to add a GestureDetector to register click for each image
-              return Image.network(snapshot.data![index].downloadUrl);
+              return GestureDetector(
+                onTap: () {
+                  onImageSelected(snapshot.data![index].downloadUrl);
+                  Navigator.of(context).pop();
+                },
+                child: Image.network(snapshot.data![index].downloadUrl),
+              );
             },
           );
         } else {
