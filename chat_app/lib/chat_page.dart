@@ -32,6 +32,11 @@ class _ChatPageState extends State<ChatPage> {
     print("Messages loading request is sent successfully");
   }
 
+  //TODO: Get Network Images from https://picsum.photos/v2/list
+  _getNetworkImage() {
+
+  }
+
   @override
   void initState() {
     super.initState();
