@@ -79,6 +79,7 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          //TODO display images from network
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
