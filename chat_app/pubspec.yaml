@@ -37,6 +37,7 @@ dependencies:
     git:
       url: https://github.com/ianfrye0818/social_media_buttons 
       ref: master
+  json_annotation: ^4.9.0
 
 
 dev_dependencies:
@@ -49,6 +50,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  json_serializable: ^6.9.4
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
