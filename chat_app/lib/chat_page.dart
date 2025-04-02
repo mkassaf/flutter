@@ -1,15 +1,13 @@
 import 'dart:convert';
 
-import 'package:chat_app/repo/image_repository.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'models/image_model.dart';
 import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({super.key});
+  const ChatPage({super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -18,7 +16,6 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   //Initial messages
   List<ChatMessageEntity> _messages = [];
-  ImageRepository _imageRepository = ImageRepository();
 
   _loadInitialMessages() {
     rootBundle.loadString('assets/mock_messages.json').then((response) {
@@ -33,7 +30,6 @@ class _ChatPageState extends State<ChatPage> {
     });
     print("Messages loading request is sent successfully");
   }
-
 
   @override
   void initState() {
@@ -61,23 +57,6 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          FutureBuilder<List<PixelFormImage>>(
-            future: _imageRepository.getNetworkImage(), // Your Future (async operation)
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // Show loading indicator
-                return CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                // Handle errors
-                return Text('Error: ${snapshot.error}');
-              } else if (snapshot.hasData) {
-                // Show image when data is ready
-                return Image.network(snapshot.data![0].downloadUrl);
-              } else {
-                return Text("No image available");
-              }
-            },
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: _messages.length,
@@ -104,5 +83,3 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 }
-
-
