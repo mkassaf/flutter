@@ -3,12 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
 
+  //TODO Remove duplicate prefs initialization calls
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   Future<void> loginUser(String username) async {
     try {
       final SharedPreferences prefs = await _prefs;
-      await prefs.setString("userName", username);
+      prefs.setString("userName", username);
     } catch (e) {
       //TODO handle error
       print("Error saving user name: $e");
@@ -17,7 +18,7 @@ class AuthService {
 
   Future<void> logoutUser() async {
     final SharedPreferences prefs = await _prefs;
-    await prefs.remove("userName");
+    prefs.remove("userName");
   }
 
   Future<String?> getUserName() async {
