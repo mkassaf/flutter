@@ -42,8 +42,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String username =
-        ModalRoute.of(context)!.settings.arguments as String;
+    final String username = context.watch<AuthService>().getUserName();
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Hi $username")),
