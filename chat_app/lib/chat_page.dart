@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -48,6 +50,7 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           IconButton(
             onPressed: () {
+              context.read<AuthService>().logoutUser();
               Navigator.pushReplacementNamed(context, "/");
             },
             icon: Icon(Icons.logout),
