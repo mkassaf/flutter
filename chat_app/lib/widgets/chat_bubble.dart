@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:chat_app/models/chat_message_entity.dart';
 
+import '../services/auth_service.dart';
+
 class ChatBubble extends StatelessWidget {
   final ChatMessageEntity chatMessageEntity;
   final Alignment alignment;
@@ -13,8 +15,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO replace hardcoded username and fetch it from AuthService
-    var isAuther = chatMessageEntity.author.username == "Assaf";
+    var isAuther = chatMessageEntity.author.username == AuthService().getUserName();
     return Align(
       alignment: alignment,
       child: Container(
