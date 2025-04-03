@@ -16,6 +16,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   //Initial messages
   List<ChatMessageEntity> _messages = [];
+  ScrollController _scrollController = ScrollController();
 
   _loadInitialMessages() {
     rootBundle.loadString('assets/mock_messages.json').then((response) {
@@ -59,6 +60,7 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Expanded(
             child: ListView.builder(
+              controller: _scrollController,
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
@@ -80,6 +82,17 @@ class _ChatPageState extends State<ChatPage> {
   void onMessageSent(ChatMessageEntity newMessage) {
     setState(() {
       _messages.add(newMessage);
+    });
+
+    // Ensure UI updates before scrolling
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
   }
 }
