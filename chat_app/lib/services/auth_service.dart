@@ -27,4 +27,8 @@ class AuthService {
     return prefs.getString("userName") ?? "Guest";
   }
 
+  void updateUserName(String newUserName) {
+    //TODO: Update shared preferences with the new username
+  }
+
 }
