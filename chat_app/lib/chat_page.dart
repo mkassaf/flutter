@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({super.key});
+  const ChatPage({super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -18,18 +17,18 @@ class _ChatPageState extends State<ChatPage> {
   //Initial messages
   List<ChatMessageEntity> _messages = [];
 
-  _loadInitialMessages() async {
-    final response = await rootBundle.loadString('assets/mock_messages.json');
-
-    final decodedList = jsonDecode(response) as List;
-
-    print(decodedList);
-    List<ChatMessageEntity> messages = decodedList.map((e) {
-      return ChatMessageEntity.fromJson(e);
-    }).toList();
-    setState(() {
-      _messages = messages;
+  _loadInitialMessages() {
+    rootBundle.loadString('assets/mock_messages.json').then((response) {
+      final decodedList = jsonDecode(response) as List;
+      List<ChatMessageEntity> messages =
+          decodedList.map((e) {
+            return ChatMessageEntity.fromJson(e);
+          }).toList();
+      setState(() {
+        _messages = messages;
+      });
     });
+    print("Messages loading request is sent successfully");
   }
 
   @override
@@ -72,7 +71,7 @@ class _ChatPageState extends State<ChatPage> {
               },
             ),
           ),
-          ChatInput(onSend: onMessageSent,),
+          ChatInput(onSend: onMessageSent),
         ],
       ),
     );
