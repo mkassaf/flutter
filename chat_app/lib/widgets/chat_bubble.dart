@@ -13,6 +13,7 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO replace hardcoded username and fetch it from AuthService
     var isAuther = chatMessageEntity.author.username == "Assaf";
     return Align(
       alignment: alignment,
