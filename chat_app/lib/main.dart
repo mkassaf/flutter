@@ -5,7 +5,9 @@ import 'login_page.dart';
 import 'package:chat_app/chat_page.dart';
 import 'package:chat_app/utils/brand_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthService.init(); // Initialize SharedPreferences
   runApp(Provider(create: (_) => AuthService(), child: ChatApp()));
 }
 

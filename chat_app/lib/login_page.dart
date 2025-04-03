@@ -22,9 +22,9 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  Future<void> loginUser() async {
+  void loginUser() {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
-      await context.read<AuthService>().loginUser(userNameController.text);
+      context.read<AuthService>().loginUser(userNameController.text);
       Navigator.pushReplacementNamed(
         context,
         '/chat',
