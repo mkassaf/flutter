@@ -1,9 +1,11 @@
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/utils/brand_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_buttons/social_media_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:chat_app/utils/spaces.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,8 +22,9 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void loginUser() {
+  Future<void> loginUser() async {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
+      await context.read<AuthService>().loginUser(userNameController.text);
       Navigator.pushReplacementNamed(
         context,
         '/chat',
