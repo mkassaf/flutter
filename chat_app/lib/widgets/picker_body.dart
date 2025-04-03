@@ -11,6 +11,7 @@ class NetworkImagePickerBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Make the picker body rounded
     return FutureBuilder<List<PixelFormImage>>(
       future: _imageRepository.getNetworkImage(),
       // Your Future (async operation)

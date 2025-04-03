@@ -18,9 +18,11 @@ class ChatBubble extends StatelessWidget {
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.5, // Max 50% of screen width
         ),
+        //TODO reduce the padding
         padding: EdgeInsets.all(24),
         margin: EdgeInsets.all(50),
         decoration: BoxDecoration(
+          //TODO change the color depending on author
           color: Colors.grey,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(12),
@@ -36,6 +38,7 @@ class ChatBubble extends StatelessWidget {
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
             if (chatMessageEntity.imageUrl != null)
+              //TODO: Make the image rounded
               Image.network(chatMessageEntity.imageUrl!, height: 120),
           ],
         ),

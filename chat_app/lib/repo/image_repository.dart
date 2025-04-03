@@ -7,7 +7,7 @@ import '../models/image_model.dart';
 
 class ImageRepository {
 
-  final _baseUrl = 'https://picsum.photos/v2/list2';
+  final _baseUrl = 'https://picsum.photos/v2/list';
 
   Future<List<PixelFormImage>> getNetworkImage({int maxRetries = 20, Duration initialDelay = const Duration(seconds: 1)}) async {
     final endpointUrl = Uri.parse(_baseUrl);

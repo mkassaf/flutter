@@ -81,5 +81,6 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       _messages.add(newMessage);
     });
+    //TODO : scroll to the ListView to the bottom
   }
 }

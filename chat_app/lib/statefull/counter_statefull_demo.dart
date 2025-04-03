@@ -26,7 +26,6 @@ class _CounterStatefullState extends State<CounterStatefull> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: debug print statement to check if build is called
     return Scaffold(
       appBar: AppBar(title: Text('Stateful Counter'), backgroundColor: appBar),
       body: Center(
@@ -42,13 +41,11 @@ class _CounterStatefullState extends State<CounterStatefull> {
 
   @override
   void dispose() {
-    //TODO: debug print statement to check if dispose is called
     super.dispose();
   }
 
   @override
   void initState() {
-    //TODO: debug print statement to check if initState is called
     super.initState();
   }
 }
