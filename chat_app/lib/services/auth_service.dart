@@ -1,9 +1,11 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
 
   static late SharedPreferences prefs;
+  static const String _userNameKey = "userName";
 
   static Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
@@ -11,20 +13,29 @@ class AuthService {
 
   void loginUser(String username) {
     try {
-      prefs.setString("userName", username);
+      prefs.setString(_userNameKey, username);
     } catch (e) {
       //TODO handle error
       print("Error saving user name: $e");
     }
   }
 
-  void logoutUser() {
-    prefs.remove("userName");
+  Future<void> logoutUser() async {
+    await  prefs.remove(_userNameKey);
   }
 
   String getUserName() {
     //TODO in case of null, throw an exception, ask for login again or return a default value
-    return prefs.getString("userName") ?? "Guest";
+    return prefs.getString(_userNameKey) ?? "Guest";
+  }
+
+  void updateUserName(String newUserName) {
+    prefs.setString(_userNameKey, newUserName);
+    notifyListeners(); // Notify listeners about the change
+  }
+
+  bool isLoggedIn() {
+    return prefs.containsKey(_userNameKey);
   }
 
 }

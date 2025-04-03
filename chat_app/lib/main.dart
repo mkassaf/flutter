@@ -8,7 +8,7 @@ import 'package:chat_app/utils/brand_colors.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AuthService.init(); // Initialize SharedPreferences
-  runApp(Provider(create: (_) => AuthService(), child: ChatApp()));
+  runApp(ChangeNotifierProvider(create: (_) => AuthService(), child: ChatApp()));
 }
 
 class ChatApp extends StatelessWidget {
@@ -27,7 +27,7 @@ class ChatApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: LoginPage(), // this equls to '/'
+      home: context.read<AuthService>().isLoggedIn()? ChatPage(): LoginPage(),
       routes: {'/chat': (context) => ChatPage()},
     );
   }
