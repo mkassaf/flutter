@@ -20,7 +20,21 @@ class NetworkImagePickerBody extends StatelessWidget {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
           // Handle errors
-          return Text('Error: ${snapshot.error}');
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30.0,
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, color: Colors.red, size: 50),
+                  SizedBox(height: 10),
+                  Text("Something went wrong. Details: ${snapshot.error}"),
+                ],
+              ),
+            ),
+          );
         } else if (snapshot.hasData) {
           // Show image when data is ready
           return GridView.builder(
@@ -39,7 +53,10 @@ class NetworkImagePickerBody extends StatelessWidget {
             },
           );
         } else {
-          return Text("No image available");
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text("No image available"),
+          );
         }
       },
     );
