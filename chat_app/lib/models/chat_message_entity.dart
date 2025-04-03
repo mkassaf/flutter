@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 class ChatMessageEntity {
   final String id;
