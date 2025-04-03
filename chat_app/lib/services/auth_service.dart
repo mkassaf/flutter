@@ -20,8 +20,8 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  void logoutUser() {
-    prefs.remove(_userNameKey);
+  Future<void> logoutUser() async {
+    await  prefs.remove(_userNameKey);
   }
 
   String getUserName() {
@@ -32,6 +32,10 @@ class AuthService extends ChangeNotifier {
   void updateUserName(String newUserName) {
     prefs.setString(_userNameKey, newUserName);
     notifyListeners(); // Notify listeners about the change
+  }
+
+  bool isLoggedIn() {
+    return prefs.containsKey(_userNameKey);
   }
 
 }

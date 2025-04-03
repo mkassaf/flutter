@@ -27,8 +27,7 @@ class ChatApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      //TODO:Decide home widget based on user login status
-      home: LoginPage(), // this equls to '/'
+      home: context.read<AuthService>().isLoggedIn()? ChatPage(): LoginPage(),
       routes: {'/chat': (context) => ChatPage()},
     );
   }
