@@ -45,7 +45,8 @@ class _ChatPageState extends State<ChatPage> {
     final String username = context.watch<AuthService>().getUserName();
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Hi $username")),
+        centerTitle: true,
+        title: Text("Hi $username"),
         actions: [
           IconButton(
             onPressed: () {
