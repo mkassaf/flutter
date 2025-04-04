@@ -37,6 +37,142 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Widget _buildHeader(context) {
+    return Column(
+      children: [
+        Text(
+          'Let\'s sign you in!',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          "Welcome back!\n You've been missed!",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Image.asset("assets/login_logo.png", height: 200),
+      ],
+    );
+  }
+
+  Widget _buildFooter() {
+    return Column(
+      children: [
+        Material(
+          child: InkWell(
+            splashColor: Colors.red,
+            // Adds a red ripple effect on tap
+            onDoubleTap: () {
+              print('Double Tap Detected');
+            },
+            onLongPress: () {
+              print('Long Press Detected');
+            },
+            onTap: _launchUrl,
+            child: Column(
+              children: [
+                Text(
+                  "Find more about Flutter",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SocialMediaButton.twitterX(url: "https://twitter.com/flutterdev"),
+            SocialMediaButton.google(
+              url: "https://google.com",
+              color: Colors.red,
+            ),
+            SocialMediaButton.linkedin(
+              url: "https://linkedin.com",
+              color: Colors.blue,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildForm() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // Username field
+              LoginTextField(
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  if (value!.length < 5) {
+                    return 'Username must be at least 5 characters long';
+                  }
+                  return null;
+                },
+                controller: userNameController,
+                hintText: "Add your username",
+              ),
+              verticalSpacing(24),
+              // Password field
+              LoginTextField(
+                controller: passwordController,
+                hasAsterisks: true,
+                hintText: "Type your password",
+              ),
+            ],
+          ),
+        ),
+        verticalSpacing(24), // Adds space between form fields and buttons
+
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith((states) {
+              // Check if the button is pressed or hovered
+              if (states.contains(WidgetState.pressed)) {
+                return Colors.blue; // Color when pressed
+              } else if (states.contains(WidgetState.hovered)) {
+                return Colors.green; // Color when hovered
+              } else if (states.contains(WidgetState.disabled)) {
+                return Colors.grey; // Color when disabled
+              }
+              return BrandColors.primary; // Default color
+            }),
+          ),
+          onPressed: loginUser,
+          child: Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        verticalSpacing(24),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,133 +180,29 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(24),
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Let\'s sign you in!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "Welcome back!\n You've been missed!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Image.asset("assets/login_logo.png", height: 200),
-
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      // Username field
-                      LoginTextField(
-                        validator: (value) {
-                          if (value != null && value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          if (value!.length < 5) {
-                            return 'Username must be at least 5 characters long';
-                          }
-                          return null;
-                        },
-                        controller: userNameController,
-                        hintText: "Add your username",
-                      ),
-                      verticalSpacing(24),
-                      // Password field
-                      LoginTextField(
-                        controller: passwordController,
-                        hasAsterisks: true,
-                        hintText: "Type your password",
-                      ),
-                    ],
-                  ),
-                ),
-                verticalSpacing(
-                  24,
-                ), // Adds space between form fields and buttons
-
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.resolveWith((states) {
-                      // Check if the button is pressed or hovered
-                      if (states.contains(WidgetState.pressed)) {
-                        return Colors.blue; // Color when pressed
-                      } else if (states.contains(WidgetState.hovered)) {
-                        return Colors.green; // Color when hovered
-                      } else if (states.contains(WidgetState.disabled)) {
-                        return Colors.grey; // Color when disabled
-                      }
-                      return BrandColors.primary; // Default color
-                    }),
-                  ),
-                  onPressed: loginUser,
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-
-                OutlinedButton(
-                  onPressed: () {},
-                  child: FlutterLogo(), // Using a logo instead of text
-                ),
-
-                Material(
-                  child: InkWell(
-                    splashColor: Colors.red, // Adds a red ripple effect on tap
-                    onDoubleTap: () {
-                      print('Double Tap Detected');
-                    },
-                    onLongPress: () {
-                      print('Long Press Detected');
-                    },
-                    onTap: _launchUrl,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Find more about Flutter",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: LayoutBuilder(
+              builder: (context, BoxConstraints constraints) {
+                if(constraints.maxWidth > 1000) {
+                  return Row(children: [
+                    Spacer(flex: 1,),
+                    Expanded(child: Column(children: [
+                      _buildHeader(context),
+                      _buildFooter()
+                    ],),)
+                    ,
+                    Spacer(flex: 1,),
+                    Expanded(child: _buildForm()),
+                    Spacer(flex: 1,),
+                  ]);
+                }
+                return Column(
                   children: [
-                    SocialMediaButton.twitterX(
-                      url: "https://twitter.com/flutterdev",
-                    ),
-                    SocialMediaButton.google(
-                      url: "https://google.com",
-                      color: Colors.red,
-                    ),
-                    SocialMediaButton.linkedin(
-                      url: "https://linkedin.com",
-                      color: Colors.blue,
-                    ),
+                    _buildHeader(context),
+                    _buildForm(),
+                    _buildFooter()
                   ],
-                ),
-              ],
+                );
+              }
             ),
           ),
         ),
