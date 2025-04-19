@@ -1,3 +1,4 @@
+import 'package:chat_app/login_page.dart';
 import 'package:flutter/material.dart';
 
 class CounterStatefull extends StatefulWidget {
@@ -28,7 +29,22 @@ class _CounterStatefullState extends State<CounterStatefull> {
   Widget build(BuildContext context) {
     //TODO: debug print statement to check if build is called
     return Scaffold(
-      appBar: AppBar(title: Text('Stateful Counter'), backgroundColor: appBar),
+      appBar: AppBar(
+        title: Text('Stateful Counter'),
+        backgroundColor: appBar,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              //This logic will be used to navigate to the login page
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            }, // Calls method on button press
+          ),
+        ],
+      ),
       body: Center(
         child: Text('Counter: $counter', style: TextStyle(fontSize: 24)),
       ),
