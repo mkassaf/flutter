@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/utils/brand_colors.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:chat_app/utils/spaces.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,9 +24,38 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void loginUser() {
+  Future<bool> loginFireBase(String userName, String password) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: userName,
+        password: password,
+      );
+      // User is signed in
+      print('User signed in: ${credential.user?.email}');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print('Error signing in: ${e.code}');
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+    return false;
+  }
+
+  void loginUser() async {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
+      var userName = userNameController.text;
+      var password = passwordController.text;
+
+      bool isValid = await loginFireBase(userName, password);
+      if (!isValid) {
+        print("Login failed");
+        return;
+      }
       context.read<AuthService>().loginUser(userNameController.text);
+
       Navigator.pushReplacementNamed(
         context,
         '/chat',
@@ -168,6 +199,66 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+        TextButton(
+          onPressed: () async {
+            try {
+              await FirebaseAuth.instance.sendPasswordResetEmail(
+                email: userNameController.text,
+              );
+            } catch (e) {
+              print('Error sending password reset email: $e');
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.error,
+                animType: AnimType.rightSlide,
+                title: 'Error',
+                desc: 'Failed to send password reset email. ${e.toString()}',
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
+              ).show();
+            }
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.info,
+              animType: AnimType.rightSlide,
+              title: 'Reset password',
+              desc: 'A password reset link has been sent to your email.',
+              btnCancelOnPress: null,
+              btnOkOnPress: () {},
+            ).show();
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Forgot password?',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+              horizontalSpacing(8),
+              Text('Reset', style: TextStyle(fontSize: 18, color: Colors.blue)),
+            ],
+          ),
+        ),
+        // Sign up button
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/signup');
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Do have an account?',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+              horizontalSpacing(8),
+              Text(
+                'Sign up',
+                style: TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+            ],
+          ),
+        ),
         verticalSpacing(24),
       ],
     );
@@ -182,27 +273,29 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             child: LayoutBuilder(
               builder: (context, BoxConstraints constraints) {
-                if(constraints.maxWidth > 1000) {
-                  return Row(children: [
-                    Spacer(flex: 1,),
-                    Expanded(child: Column(children: [
-                      _buildHeader(context),
-                      _buildFooter()
-                    ],),)
-                    ,
-                    Spacer(flex: 1,),
-                    Expanded(child: _buildForm()),
-                    Spacer(flex: 1,),
-                  ]);
+                if (constraints.maxWidth > 1000) {
+                  return Row(
+                    children: [
+                      Spacer(flex: 1),
+                      Expanded(
+                        child: Column(
+                          children: [_buildHeader(context), _buildFooter()],
+                        ),
+                      ),
+                      Spacer(flex: 1),
+                      Expanded(child: _buildForm()),
+                      Spacer(flex: 1),
+                    ],
+                  );
                 }
                 return Column(
                   children: [
                     _buildHeader(context),
                     _buildForm(),
-                    _buildFooter()
+                    _buildFooter(),
                   ],
                 );
-              }
+              },
             ),
           ),
         ),

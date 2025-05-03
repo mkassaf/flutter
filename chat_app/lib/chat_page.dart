@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/chat_input.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
@@ -20,17 +22,14 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessageEntity> _messages = [];
   ScrollController _scrollController = ScrollController();
 
-  _loadInitialMessages() {
-    rootBundle.loadString('assets/mock_messages.json').then((response) {
-      final decodedList = jsonDecode(response) as List;
-      List<ChatMessageEntity> messages =
-          decodedList.map((e) {
-            return ChatMessageEntity.fromJson(e);
-          }).toList();
-      setState(() {
-        _messages = messages;
-      });
+  _loadInitialMessages() async {
+    var query = await FirebaseFirestore.instance.collection("messages").get();
+    query.docs.forEach((doc) {
+      var message = ChatMessageEntity.fromJson(doc.data());
+      _messages.add(message);
+      setState(() {});
     });
+
     print("Messages loading request is sent successfully");
   }
 
@@ -57,6 +56,7 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(
             onPressed: () async {
               await context.read<AuthService>().logoutUser();
+              await FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, "/");
             },
             icon: Icon(Icons.logout),
@@ -88,11 +88,25 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void onMessageSent(ChatMessageEntity newMessage) {
+  void onMessageSent(ChatMessageEntity newMessage) async {
+    var currentUser = await FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance
+        .collection("messages")
+        .add({
+          "id": newMessage.id,
+          "text": newMessage.text,
+          "createdAt": newMessage.createdAt.millisecond,
+          "imageUrl": newMessage.imageUrl,
+          "author": {"username": currentUser!.email},
+        })
+        .then(
+          (DocumentReference doc) =>
+              print('DocumentSnapshot added with ID: ${doc.id}'),
+        );
+
     setState(() {
       _messages.add(newMessage);
     });
-
     // Ensure UI updates before scrolling
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {

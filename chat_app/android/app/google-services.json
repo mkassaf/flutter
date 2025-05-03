@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "77154251566",
+    "project_id": "test-assaf-project",
+    "storage_bucket": "test-assaf-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77154251566:android:8d3b036ddd7095a51a80bf",
+        "android_client_info": {
+          "package_name": "edu.najah.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3TExZNMEJt1dXPz3T0aXB6HoL3Seg-1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

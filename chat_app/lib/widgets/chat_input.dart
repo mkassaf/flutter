@@ -23,7 +23,7 @@ class _ChatInputState extends State<ChatInput> {
       text: chatMessageController.text,
       createdAt: DateTime.now(),
       imageUrl: _selectedImageUrl,
-      author: Author(username: 'Assaf'),
+      author: Author(username: "User"),
     );
     widget.onSend(newChatMessage);
     setState(() {
@@ -54,7 +54,7 @@ class _ChatInputState extends State<ChatInput> {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return NetworkImagePickerBody(onImageSelected: onImagePicked,);
+                  return NetworkImagePickerBody(onImageSelected: onImagePicked);
                 },
               );
             },
@@ -79,7 +79,7 @@ class _ChatInputState extends State<ChatInput> {
                   ),
                 ),
                 if (_selectedImageUrl != null)
-                  Image.network(_selectedImageUrl!, width: 100,),
+                  Image.network(_selectedImageUrl!, width: 100),
               ],
             ),
           ),

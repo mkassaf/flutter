@@ -1,4 +1,3 @@
-
 class ChatMessageEntity {
   final String id;
   final String text;
@@ -20,7 +19,7 @@ class ChatMessageEntity {
       text: json['text'],
       createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt']),
       author: Author.fromJson(json['author']),
-      imageUrl: json['image'],
+      imageUrl: json['imageUrl'],
     );
   }
 }
