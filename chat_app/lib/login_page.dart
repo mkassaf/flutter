@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         email: userName,
         password: password,
       );
-      // User is signed in
+      //TODO ensure the email is verifed!
       print('User signed in: ${credential.user?.email}');
       return true;
     } on FirebaseAuthException catch (e) {

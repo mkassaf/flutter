@@ -28,6 +28,8 @@ class _LoginPageState extends State<SignUpPage> {
             email: userName.text,
             password: password.text,
           );
+      //TODO send verification email
+      print('User registered: ${credential.user?.email}');
       return true;
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code, e.message!);
