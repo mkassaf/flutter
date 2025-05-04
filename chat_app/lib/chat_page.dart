@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chat_app/widgets/chat_input.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,18 +20,11 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessageEntity> _messages = [];
 
   _loadInitialMessages() async {
-    //TODO load messages from firebase
-    final response = await rootBundle.loadString('assets/mock_messages.json');
-
-    final decodedList = jsonDecode(response) as List;
-
-    print(decodedList);
-    List<ChatMessageEntity> messages =
-        decodedList.map((e) {
-          return ChatMessageEntity.fromJson(e);
-        }).toList();
-    setState(() {
-      _messages = messages;
+    var query = await FirebaseFirestore.instance.collection("messages").get();
+    query.docs.forEach((doc) {
+      var message = ChatMessageEntity.fromJson(doc.data());
+      _messages.add(message);
+      setState(() {});
     });
   }
 
@@ -62,6 +56,7 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Expanded(
             child: ListView.builder(
+              reverse: true,
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return ChatBubble(
@@ -80,8 +75,10 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void onMessageSent(ChatMessageEntity newMessage) {
-    //TODO: send message to firebase cloud
+  void onMessageSent(ChatMessageEntity newMessage) async {
+    await FirebaseFirestore.instance
+        .collection('messages')
+        .add(newMessage.toJson());
     setState(() {
       _messages.add(newMessage);
     });

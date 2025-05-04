@@ -1,4 +1,5 @@
 import 'package:chat_app/models/chat_message_entity.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
@@ -13,7 +14,8 @@ class ChatInput extends StatelessWidget {
       id: "123",
       text: chatMessageController.text,
       createdAt: DateTime.now(),
-      author: Author(username: 'Assaf'),
+      author: Author(username: FirebaseAuth.instance.currentUser!.email!),
+      imageUrl: "https://shorturl.at/PkTiO",
     );
     onSend(newChatMessage);
   }
