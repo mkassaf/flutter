@@ -23,11 +23,12 @@ class _LoginPageState extends State<SignUpPage> {
     TextEditingController password,
   ) async {
     try {
-      final credential = await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
             email: userName.text,
             password: password.text,
           );
+      await userCredential.user?.sendEmailVerification();
       return true;
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code, e.message!);
@@ -66,11 +67,7 @@ class _LoginPageState extends State<SignUpPage> {
         print("Sign failed");
         return;
       }
-      Navigator.pushReplacementNamed(
-        context,
-        '/chat',
-        arguments: userNameController.text,
-      );
+      Navigator.pushReplacementNamed(context, '/');
       print("Login successful");
     } else {
       // Validation failed, show error messages

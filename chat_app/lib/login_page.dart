@@ -30,6 +30,22 @@ class _LoginPageState extends State<LoginPage> {
       );
       // User is signed in
       print('User signed in: ${credential.user?.email}');
+      if (credential.user != null && !credential.user!.emailVerified) {
+        // Check if the user is verified
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.rightSlide,
+          title: 'Email Verification',
+          desc: 'Please verify your email before logging in.',
+          btnOkOnPress: () async {
+            await credential.user?.sendEmailVerification();
+          },
+          btnCancelOnPress: () {},
+        ).show();
+
+        return false;
+      }
       return true;
     } on FirebaseAuthException catch (e) {
       print('Error signing in: ${e.code}');
@@ -209,6 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
+                //TODO add reset password button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
