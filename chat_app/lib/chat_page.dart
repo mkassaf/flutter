@@ -22,7 +22,9 @@ class _ChatPageState extends State<ChatPage> {
   _loadInitialMessages() async {
     var query = await FirebaseFirestore.instance.collection("messages").get();
     query.docs.forEach((doc) {
-      var message = ChatMessageEntity.fromJson(doc.data());
+      var data = doc.data();
+      data["id"] = doc.id;
+      var message = ChatMessageEntity.fromJson(data);
       _messages.add(message);
       setState(() {});
     });
