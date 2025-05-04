@@ -4,6 +4,7 @@ import 'package:chat_app/chat_page.dart';
 import 'package:chat_app/utils/brand_colors.dart';
 
 void main() {
+  //TODO: Initialize Firebase
   runApp(ChatApp());
 }
 
