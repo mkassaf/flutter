@@ -29,11 +29,16 @@ class ChatApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: LoginPage(), // this equls to '/'
+      home: isLoggedIn() ? ChatPage() : LoginPage(), // this equls to '/'
       routes: {
         '/chat': (context) => ChatPage(),
         '/signup': (context) => SignUpPage(),
       },
     );
+  }
+
+  bool isLoggedIn() {
+    return FirebaseAuth.instance.currentUser != null &&
+        FirebaseAuth.instance.currentUser!.emailVerified;
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:chat_app/widgets/chat_input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
@@ -24,9 +24,10 @@ class _ChatPageState extends State<ChatPage> {
     final decodedList = jsonDecode(response) as List;
 
     print(decodedList);
-    List<ChatMessageEntity> messages = decodedList.map((e) {
-      return ChatMessageEntity.fromJson(e);
-    }).toList();
+    List<ChatMessageEntity> messages =
+        decodedList.map((e) {
+          return ChatMessageEntity.fromJson(e);
+        }).toList();
     setState(() {
       _messages = messages;
     });
@@ -40,14 +41,14 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String username =
-        ModalRoute.of(context)!.settings.arguments as String;
+    final String username = FirebaseAuth.instance.currentUser!.email!;
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Hi $username")),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, "/");
             },
             icon: Icon(Icons.logout),
@@ -72,7 +73,7 @@ class _ChatPageState extends State<ChatPage> {
               },
             ),
           ),
-          ChatInput(onSend: onMessageSent,),
+          ChatInput(onSend: onMessageSent),
         ],
       ),
     );

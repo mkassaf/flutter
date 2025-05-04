@@ -225,7 +225,36 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                //TODO add reset password button
+                TextButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.sendPasswordResetEmail(
+                      email: userNameController.text,
+                    );
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.success,
+                      animType: AnimType.rightSlide,
+                      title: 'Password Reset',
+                      desc:
+                          'A password reset link has been sent to your email.',
+                      btnOkOnPress: () {},
+                    ).show();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Forgot password?',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      horizontalSpacing(8),
+                      Text(
+                        'Reset it',
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
