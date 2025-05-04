@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "610365717969",
+    "project_id": "chatapp-test-cap-test1",
+    "storage_bucket": "chatapp-test-cap-test1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610365717969:android:a0f21ea33879540021b4f0",
+        "android_client_info": {
+          "package_name": "edu.najah.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb-yokcqSLj7rzAiJ1x2VEArWW7haEnAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

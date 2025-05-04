@@ -37,6 +37,7 @@ dependencies:
     git:
       url: https://github.com/ianfrye0818/social_media_buttons 
       ref: master
+  firebase_core: ^3.13.0
 
 
 dev_dependencies:
