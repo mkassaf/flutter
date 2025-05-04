@@ -1,4 +1,6 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:chat_app/utils/brand_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_buttons/social_media_button.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,14 +22,51 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  Future<bool> loginFireBase(String userName, String password) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: userName,
+        password: password,
+      );
+      // User is signed in
+      print('User signed in: ${credential.user?.email}');
+      return true;
+    } on FirebaseAuthException catch (e) {
+      print('Error signing in: ${e.code}');
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+    return false;
+  }
+
   void loginUser() {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
-      Navigator.pushReplacementNamed(
-        context,
-        '/chat',
-        arguments: userNameController.text,
-      );
-      print("Login successful");
+      loginFireBase(userNameController.text, passwordController.text).then((
+        isLoggedIn,
+      ) {
+        if (isLoggedIn) {
+          // Navigate to chat page
+          Navigator.pushReplacementNamed(
+            context,
+            '/chat',
+            arguments: userNameController.text,
+          );
+          print("Login successful");
+        } else {
+          // Validation failed, show error messages
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.rightSlide,
+            title: 'Login Failed',
+            desc: 'Invalid username or password',
+            btnOkOnPress: () {},
+          ).show();
+        }
+      });
     } else {
       // Validation failed, show error messages
       print("Login failed");
@@ -149,6 +188,25 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Do have an account?',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      horizontalSpacing(8),
+                      Text(
+                        'Sign up',
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
+                    ],
                   ),
                 ),
                 Row(
