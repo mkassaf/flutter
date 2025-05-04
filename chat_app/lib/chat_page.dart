@@ -19,6 +19,7 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessageEntity> _messages = [];
 
   _loadInitialMessages() async {
+    //TODO load messages from firebase
     final response = await rootBundle.loadString('assets/mock_messages.json');
 
     final decodedList = jsonDecode(response) as List;
@@ -80,6 +81,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void onMessageSent(ChatMessageEntity newMessage) {
+    //TODO: send message to firebase cloud
     setState(() {
       _messages.add(newMessage);
     });
