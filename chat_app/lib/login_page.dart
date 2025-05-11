@@ -1,4 +1,5 @@
 import 'package:chat_app/utils/brand_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_buttons/social_media_button.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,14 +21,47 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void loginUser() {
+  void loginUser() async {
     if (_formKey.currentContext != null && _formKey.currentState!.validate()) {
-      Navigator.pushReplacementNamed(
-        context,
-        '/chat',
-        arguments: userNameController.text,
-      );
-      print("Login successful");
+      try {
+        var cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: userNameController.text,
+          password: passwordController.text,
+        );
+        if (cred.user?.emailVerified == false) {
+          // Handle email not verified
+          showDialog(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: Text("Email Not Verified"),
+                  content: Text("Please verify your email before logging in."),
+                  actions: [
+                    TextButton(
+                      onPressed: () => cred.user?.sendEmailVerification(),
+                      child: Text('Send Verification Email'),
+                    ),
+                  ],
+                ),
+          );
+          return;
+        }
+
+        if (cred.user == null) {
+          // Handle user not found
+          print("User not found");
+          return;
+        }
+
+        Navigator.pushReplacementNamed(
+          context,
+          '/chat',
+          arguments: userNameController.text,
+        );
+      } catch (e) {
+        // Handle login error
+        print("Login error: $e");
+      }
     } else {
       // Validation failed, show error messages
       print("Login failed");
@@ -122,9 +156,61 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                OutlinedButton(
-                  onPressed: () {},
-                  child: FlutterLogo(), // Using a logo instead of text
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Do have an account?',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      horizontalSpacing(8),
+                      Text(
+                        'Sign up',
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.sendPasswordResetEmail(
+                      email: userNameController.text,
+                    );
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => AlertDialog(
+                            title: Text("Password Reset"),
+                            content: Text(
+                              "Check your email for password reset.",
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text('OK'),
+                              ),
+                            ],
+                          ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Forget password?',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      horizontalSpacing(8),
+                      Text(
+                        'Reset password!',
+                        style: TextStyle(fontSize: 18, color: Colors.blue),
+                      ),
+                    ],
+                  ),
                 ),
 
                 Material(

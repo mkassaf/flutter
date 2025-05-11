@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378218992301",
+    "project_id": "chat-app-cap-najah",
+    "storage_bucket": "chat-app-cap-najah.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378218992301:android:3745a2f1ee56dd7f2d6c24",
+        "android_client_info": {
+          "package_name": "edu.najah.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5E5FxLKyVebYjCG7Zob5R_YNDgB76sbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

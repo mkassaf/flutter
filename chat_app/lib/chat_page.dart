@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:chat_app/widgets/chat_input.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
@@ -19,16 +21,19 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessageEntity> _messages = [];
 
   _loadInitialMessages() async {
-    final response = await rootBundle.loadString('assets/mock_messages.json');
+    var query = await FirebaseFirestore.instance.collection("messages").get();
 
-    final decodedList = jsonDecode(response) as List;
+    _messages =
+        query.docs.map((doc) {
+          var id = doc.id;
+          var data = doc.data();
+          data.update("id", (_) => id);
+          print("data : $data");
+          return ChatMessageEntity.fromJson(data);
+        }).toList();
 
-    print(decodedList);
-    List<ChatMessageEntity> messages = decodedList.map((e) {
-      return ChatMessageEntity.fromJson(e);
-    }).toList();
     setState(() {
-      _messages = messages;
+      _messages = _messages;
     });
   }
 
@@ -40,14 +45,14 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String username =
-        ModalRoute.of(context)!.settings.arguments as String;
+    final String username = FirebaseAuth.instance.currentUser!.email ?? "User";
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("Hi $username")),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
               Navigator.pushReplacementNamed(context, "/");
             },
             icon: Icon(Icons.logout),
@@ -72,9 +77,15 @@ class _ChatPageState extends State<ChatPage> {
               },
             ),
           ),
-          ChatInput(),
+          ChatInput(onSendMessage: addMessage),
         ],
       ),
     );
+  }
+
+  void addMessage(ChatMessageEntity message) {
+    setState(() {
+      _messages.add(message);
+    });
   }
 }
