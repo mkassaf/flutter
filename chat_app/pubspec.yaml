@@ -40,6 +40,7 @@ dependencies:
   firebase_core: ^3.13.0
   firebase_auth: ^5.5.3
   cloud_firestore: ^5.6.7
+  firebase_pagination: ^4.1.0
 
 
 dev_dependencies:

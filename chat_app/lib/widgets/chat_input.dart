@@ -18,21 +18,24 @@ class _ChatInputState extends State<ChatInput> {
 
   void onSendButtonPressed() async {
     print("Message sent: ${chatMessageController.text}");
-    ChatMessageEntity newMessage = ChatMessageEntity(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      text: chatMessageController.text,
-      createdAt: DateTime.now(),
-      author: Author(username: "User"),
-      imageUrl: null,
-    );
-    try {
-      await FirebaseFirestore.instance
-          .collection("messages")
-          .add(newMessage.toJson());
-      widget.onSendMessage(newMessage);
-      chatMessageController.clear();
-    } catch (e) {
-      print("Error sending message: $e");
+    for (int i = 0; i < 1000; i++) {
+      ChatMessageEntity newMessage = ChatMessageEntity(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        text: "test message 10$i",
+        createdAt: DateTime.now(),
+        author: Author(username: "User"),
+        imageUrl: null,
+      );
+
+      try {
+        await FirebaseFirestore.instance
+            .collection("messages")
+            .add(newMessage.toJson());
+        // widget.onSendMessage(newMessage);
+        // chatMessageController.clear();
+      } catch (e) {
+        print("Error sending message: $e");
+      }
     }
   }
 

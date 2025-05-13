@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
@@ -40,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    _loadInitialMessages();
+    //_loadInitialMessages();
   }
 
   @override
@@ -64,13 +65,27 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
+            child: FirestorePagination(
+              limit: 20, // Defaults to 10.
+              isLive: true, // Defaults to false.
+              viewType: ViewType.list,
+              reverse: true,
+              query: FirebaseFirestore.instance
+                  .collection("messages")
+                  .orderBy("createdAt", descending: true),
+              itemBuilder: (context, documentSnapshot, index) {
+                if (documentSnapshot.isEmpty) {
+                  return Center(child: Text("No messages yet"));
+                }
+                var id = documentSnapshot[index].id;
+                final data =
+                    documentSnapshot[index].data() as Map<String, dynamic>;
+                data.update("id", (_) => id);
                 return ChatBubble(
-                  chatMessageEntity: _messages[index],
+                  chatMessageEntity: ChatMessageEntity.fromJson(data),
                   alignment:
-                      _messages[index].author.username == username
+                      ChatMessageEntity.fromJson(data).author.username ==
+                              username
                           ? Alignment.centerRight
                           : Alignment.centerLeft,
                 );
