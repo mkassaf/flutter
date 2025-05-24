@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/models/chat_message_entity.dart';
@@ -26,6 +28,7 @@ class _ChatBubbleState extends State<ChatBubble> {
           createdAt: widget.chatMessageEntity.createdAt,
           author: widget.chatMessageEntity.author,
           imageUrl: widget.chatMessageEntity.imageUrl,
+          image64base: widget.chatMessageEntity.image64base,
         );
         await FirebaseFirestore.instance
             .collection("messages")
@@ -60,8 +63,16 @@ class _ChatBubbleState extends State<ChatBubble> {
                 widget.chatMessageEntity.text,
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
-              if (widget.chatMessageEntity.imageUrl != null)
+              if (widget.chatMessageEntity.imageUrl != null &&
+                  widget.chatMessageEntity.imageUrl!.isNotEmpty)
                 Image.network(widget.chatMessageEntity.imageUrl!, height: 120),
+              if (widget.chatMessageEntity.image64base != null &&
+                  widget.chatMessageEntity.image64base!.isNotEmpty &&
+                  widget.chatMessageEntity.image64base!.length > 100)
+                Image.memory(
+                  base64Decode(widget.chatMessageEntity.image64base!),
+                  height: 120,
+                ),
             ],
           ),
         ),

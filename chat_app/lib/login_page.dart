@@ -206,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       horizontalSpacing(8),
                       Text(
-                        'Reset password!',
+                        'Reset!',
                         style: TextStyle(fontSize: 18, color: Colors.blue),
                       ),
                     ],

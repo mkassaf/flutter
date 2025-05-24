@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
 class ChatMessageEntity {
   final String id;
   final String text;
   final String? imageUrl;
   final DateTime createdAt;
   final Author author;
+  String? image64base;
 
   ChatMessageEntity({
     required this.id,
@@ -13,6 +12,7 @@ class ChatMessageEntity {
     required this.createdAt,
     required this.author,
     this.imageUrl,
+    this.image64base,
   });
 
   factory ChatMessageEntity.fromJson(Map<String, dynamic> json) {
@@ -22,6 +22,7 @@ class ChatMessageEntity {
       createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt']),
       author: Author.fromJson(json['author']),
       imageUrl: json['image'],
+      image64base: json['image64base'],
     );
   }
 
@@ -32,6 +33,7 @@ class ChatMessageEntity {
       'createdAt': createdAt.millisecondsSinceEpoch,
       'author': author.toJson(),
       'image': imageUrl,
+      'image64base': image64base,
     };
   }
 }
