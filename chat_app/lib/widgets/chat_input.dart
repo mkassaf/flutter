@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:chat_app/models/chat_message_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ChatInput extends StatefulWidget {
   void Function(ChatMessageEntity message) onSendMessage;
@@ -23,18 +23,24 @@ class _ChatInputState extends State<ChatInput> {
   final chatMessageController = TextEditingController();
 
   void onSendButtonPressed() async {
-    String image64base = "";
-    if (galleryFile != null) {
-      // Convert the image to base64 string
-      final bytes = await galleryFile!.readAsBytes();
-      image64base = base64Encode(bytes);
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child("images")
+        .child(DateTime.now().millisecondsSinceEpoch.toString());
+    try {
+      if (galleryFile != null) {
+        await storageRef.putFile(galleryFile!);
+        print("Image uploaded successfully");
+      }
+    } catch (e) {
+      print("Error uploading image: $e");
     }
     ChatMessageEntity newMessage = ChatMessageEntity(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       text: chatMessageController.text,
       createdAt: DateTime.now(),
       author: Author(username: "User"),
-      image64base: image64base,
+      imageUrl: galleryFile != null ? await storageRef.getDownloadURL() : null,
     );
 
     try {

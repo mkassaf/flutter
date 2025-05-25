@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'widgets/chat_bubble.dart';
 import 'models/chat_message_entity.dart';
 
@@ -21,27 +17,9 @@ class _ChatPageState extends State<ChatPage> {
   //Initial messages
   List<ChatMessageEntity> _messages = [];
 
-  _loadInitialMessages() async {
-    var query = await FirebaseFirestore.instance.collection("messages").get();
-
-    _messages =
-        query.docs.map((doc) {
-          var id = doc.id;
-          var data = doc.data();
-          data.update("id", (_) => id);
-          print("data : $data");
-          return ChatMessageEntity.fromJson(data);
-        }).toList();
-
-    setState(() {
-      _messages = _messages;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    //_loadInitialMessages();
   }
 
   @override
